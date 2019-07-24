@@ -13,11 +13,11 @@
                 {% include 'home/notice.html' %}
             {% endif %}
         {% endblock adv %}
-        {% include 'home/header.html' %}
+        {{ page.navigation }}
         <main class="main content-wrapper">
             {{ page.body }}
         </main>
-        {% include 'home/footer.html' %}
+        {{ page.footer }}
 
     </div>
     {% comment %}

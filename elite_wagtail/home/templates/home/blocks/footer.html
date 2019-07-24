@@ -1,9 +1,11 @@
-{% load i18n %} 
+{% load i18n %}
+{% load wagtailimages_tags %} 
 <div class="my-footer">
     <div class="footer-content clearfix">
         <div class="footer-app">
-            <img class="logo" src="https://www.elitemba.cn/static/normal-theme/images/logo.5cef1c16cb0a.png">
-            <p class="slogan">{% trans "学则变 · 变则进" %}</p>
+            {% image value.image original as tmp_photo %}
+            <img class="logo" src="{{ tmp_photo.url }}" alt="英荔商学院 主页" />
+            <p class="slogan">{% trans "provided by E-ducation" %}</p>
             <div class="footer-btn">
                 <i class="footer-icon">
                     <svg viewBox="64 64 896 896" class="" width="1em" height="1em" aria-hidden="true">

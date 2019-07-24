@@ -258,12 +258,31 @@ class SeriesBlock(blocks.StructBlock):
 
 class IntroductionBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=True, label=_('模块标题'))
-    content = blocks.ListBlock(blocks.RawHTMLBlock(label=_('内容'), required=False), label=_('内容列表'))
+    contents = blocks.ListBlock(
+        blocks.RawHTMLBlock(label=_('内容'), required=False), label=_('内容列表'))
     
     class Meta:
         icon = 'user'
         label = "公司简介"
         template = 'home/blocks/introduction.html'
+
+
+class NavigationImageBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True, label=_('导航图片'))
+    
+    class Meta:
+        icon = 'user'
+        label = "导航图片"
+        template = 'home/blocks/navigation.html'
+
+
+class FooterImageBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True, label=_('footer'))
+    
+    class Meta:
+        icon = 'user'
+        label = "footer图片"
+        template = 'home/blocks/footer.html'               
 
 
 class HomePage(Page):
@@ -274,6 +293,14 @@ class HomePage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    
+    navigation = StreamField([
+        ('NavigationImageBlock', NavigationImageBlock()),
+        ])
+
+    footer =  StreamField([
+        ('FooterImageBlock', FooterImageBlock()),
+        ])   
 
     body = StreamField([
         ('Paragraph', blocks.RichTextBlock()),
@@ -320,8 +347,10 @@ class HomePage(Page):
     ])
 
     content_panels = Page.content_panels + [
+        StreamFieldPanel('navigation'),
         StreamFieldPanel('body'),
         SnippetChooserPanel('advert'),
+        StreamFieldPanel('footer'),
     ]
 
     api_fields = [

@@ -1,4 +1,5 @@
-{% load i18n %} 
+{% load i18n %}
+{% load wagtailimages_tags %}
 <header class="global-header ">
     <div class="main-header">
         <h1 class="header-logo">
@@ -6,8 +7,8 @@
             {% get_current_language as LANGUAGE_CODE %}
             {% language LANGUAGE_CODE %}
             <a href="{% url 'wagtail_serve' '' %}">
-                <img class="logo" src="https://www.elitemba.cn/static/normal-theme/images/logo.5cef1c16cb0a.png"
-                    alt="英荔商学院 主页">
+                {% image value.image original as tmp_photo %}
+                <img class="logo" src="{{ tmp_photo.url }}" alt="英荔商学院 主页" />    
             </a>
             {% endlanguage %}
         </h1>
