@@ -256,6 +256,16 @@ class SeriesBlock(blocks.StructBlock):
         icon = 'user'
 
 
+class IntroductionBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=True, label=_('模块标题'))
+    content = blocks.ListBlock(blocks.RawHTMLBlock(label=_('内容'), required=False), label=_('内容列表'))
+    
+    class Meta:
+        icon = 'user'
+        label = "公司简介"
+        template = 'home/blocks/introduction.html'
+
+
 class HomePage(Page):
     advert = models.ForeignKey(
         'home.Advert',
@@ -306,6 +316,7 @@ class HomePage(Page):
         ], template='home/blocks/subject_course.html')),
         ('VipBlock', VipBlock()),
         ('SeriesProcessBlock', SeriesProcessBlock()),
+        ('IntroductionBlock', IntroductionBlock()),
     ])
 
     content_panels = Page.content_panels + [

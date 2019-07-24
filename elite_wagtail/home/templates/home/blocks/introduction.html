@@ -1,0 +1,9 @@
+{% load wagtailimages_tags %}
+<div class="section section-series">
+    <h1>{{ value.title }}</h1>
+    {% for block in value.content %} 
+        <div class="row">
+            <h2>{{ block }}</h2>
+        </div>
+    {% endfor %} 
+</div>
