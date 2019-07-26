@@ -2,6 +2,20 @@ from django import template
 
 from taggit.models import Tag
 
+import datetime
+
+from django.contrib.admin.templatetags.admin_list import ResultList, result_headers
+from django.contrib.admin.utils import display_for_field, display_for_value, lookup_field
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import models
+from django.forms.utils import flatatt
+from django.template import Library
+from django.template.loader import get_template
+from django.utils.encoding import force_text
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext as _
+
 register = template.Library()
 
 
@@ -23,3 +37,38 @@ def tags_list(context, limit=None, tags_qs=None):
 
     context['tags'] = tags
     return context    
+
+
+@register.inclusion_tag("home/userfeeback_list.html", takes_context=True)
+def userfeeback_list(context):
+    """
+    Displays the headers and data list together
+    """
+    view = context['view']
+    headers = list(result_headers(view))
+    num_sorted_fields = 0
+    for h in headers:
+        if h['sortable'] and h['sorted']:
+            num_sorted_fields += 1
+    context.update({
+        'result_headers': headers,
+        'num_sorted_fields': num_sorted_fields
+        })  
+    return context
+
+
+@register.inclusion_tag("home/image_list.html", takes_context=True)
+def image_list(context):
+    """
+    Displays the image list together
+    """ 
+    try:
+        pic_url_list = str(context['items'].image_url).split(',')
+    except Exception as e:
+        print(e)
+        pic_url_list = [] 
+    context.update({
+        'pic_list': pic_url_list
+    })    
+
+    return context
